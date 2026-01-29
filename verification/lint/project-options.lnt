@@ -1,0 +1,49 @@
+//
+// Project specific configurations options for PC-Lint
+//
+
+project_include_path.lnt
+
+//--- Common relaxation ---------------------------------------------------------------------------
+-e537   // enable repeated include file
+-e717   // enable do .. while(0) wrappers
+-e793   // enable more than 6 'significant characters in an external identifier'
+-e621   // suppress ioports.h warnings
+-e835   // Info 835: A zero has been given as right argument to operator '>>'
+-e586   // Warning 586: keyword 'asm' is deprecated. [MISRA 2004 Rule 2.1]
+-e950   // Note 950: Non-ANSI reserved word or construct: 'asm' [MISRA 2004 Rule 1.1, required], [MISRA 2004 Rule 2.2, required]
+-e641   // Converting enum to int--- Harmless
+
+//--- MISRA 2004 deviations -----------------------------------------------------------------------
+-estring(975, space)            // enable pragma space (see MLX16 GCC manual for details)
+//-estring(950, "//")             // enable C99 comments => MISRA 2004:2.2 deviation: ok for MISRA 2012
+-estring(950, __asm__)          // enable __asm__ keywords => MISRA 2004:1.1 deviation
+
+-estring(960, __asm__)          // workaround for non MISRA friendly co-gcc.h
+-estring(960, __builtin_va_arg) // .. ditto
+-estring(960, assert)           // .. ditto
+
+-estring(950, interrupt, __interrupt__)        // enable interrupt keywords =>  MISRA 2004:2.2 deviation
+-estring(950, __inline__)       // ditto for __inline__
+
+-estring(835, "<<")             // enable (x << 0) expressions
+
+-emacro({506},ASSERT)           // ignore violations for ASSERT macro (from static_assert.h)
+-emacro({762},ASSERT)
+-emacro({960},ASSERT)
+-emacro({970},ASSERT)
+-estring(757,assertion_failed)
+-estring(960,assertion_failed)
+
+-emacro(78, *ATOMIC* )
+-emacro(63, *ATOMIC* )
+-emacro(10, *ATOMIC* )
+-emacro(40, *ATOMIC* )
+-emacro(438, *ATOMIC* )
+-emacro(520, *ATOMIC* )
+-emacro(550, *ATOMIC* )
+
+// Added by svm
+-e46 							// enable other types for bit-fields
+-e641 							// converting enum to int
+

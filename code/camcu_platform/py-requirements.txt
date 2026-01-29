@@ -1,0 +1,5 @@
+--extra-index-url https://dsl.melexis.com/artifactory/api/pypi/pypi-release/simple
+
+pymlxhex==2.0.0
+lin_nodegen>=2.1,<3.*
+melibu_nodegen==0.3.3

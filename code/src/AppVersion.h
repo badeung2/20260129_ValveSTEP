@@ -1,0 +1,7 @@
+#ifndef _APP_VERSION_H_
+#define _APP_VERSION_H_
+#define __APP_VERSION_MAJOR__ 1UL
+#define __APP_VERSION_MINOR__ 0UL
+#define __APP_VERSION_REVISION__ 0xE017UL
+#define __APP_VERSION_STRING__ "1.0.E017"
+#endif

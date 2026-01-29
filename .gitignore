@@ -1,0 +1,30 @@
+# Build Artifacts
+*.elf
+*.hex
+*.map
+*.lss
+*.o
+*.d
+*.obj
+*.a
+
+# Temporary Files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Python
+__pycache__/
+*.pyc
+
+# IDE/System
+.settings/
+.project
+.cproject
+Thumbs.db
+.DS_Store
+
+# Output Directories
+debug/
+release/

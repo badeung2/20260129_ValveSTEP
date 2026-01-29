@@ -1,0 +1,6 @@
+[submodule "src/std_lin_api/repository"]
+	path = src/std_lin_api/repository
+	url = ../../../swcc-lib-mlx16/lib-lin-api.git
+[submodule "src/mls_loader/repository"]
+	path = src/mls_loader/repository
+	url = ../../../swcc-lib-mlx16/lib-mlx-lin-ldr.git

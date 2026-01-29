@@ -1,0 +1,64 @@
+Found 63 differences:
+--- AppSwitches.h
++++ AppSwitches_OL.h
+@@ -251 +250,0 @@
+-#define _SUPPORT_MLX_DEBUG_MODE             FALSE /*TRUE*/                      /*!< Melexis Debug-mode (Flash testing) */
+@@ -274 +273 @@
+-#define _SUPPORT_ADC_TEMPCOMP               /*FALSE*/ TRUE                      /*!< FALSE: ADC without temperature compensation; TRUE: ADC with temperature compensation (MMP200626-1); This requires Non Volatile Memory V3 layout or higher */
++#define _SUPPORT_ADC_TEMPCOMP               /*FALSE*/ TRUE                      /*!< FALSE: ADC without temperature compensation; TRUE: ADC with temperature compensation (MMP200626-1); This requires EEPROM V3 layout or higher */
+@@ -330,0 +330 @@
++#define _SUPPORT_DYN_MCUR_EXP               FALSE /*TRUE*/                      /*!< FALSE: MCur Exponent based on last Command; TRUE: MCur Exponent dynamically calculated */
+@@ -466,2 +466,2 @@
+-#define _SUPPORT_FOC_MODE                   FOC_MODE_NONE                     /*!< FOC mode Selection (with Rotor-sensor) */
+-//#define _SUPPORT_FOC_MODE                   FOC_MODE_IB                         /*!< FOC mode Selection (with Rotor-sensor) */
++#define _SUPPORT_FOC_MODE                   FOC_MODE_NONE                       /*!< FOC mode Selection (with Rotor-sensor) */
++/*#define _SUPPORT_FOC_MODE                 FOC_MODE_IB*/                       /*!< FOC mode Selection (with Rotor-sensor) */
+@@ -581 +580,0 @@
+-#define _SUPPORT_TRIAXIS_MLX90427           FALSE /*TRUE*/                      /*!< FALSE: No MLX90427 Triaxis support; TRUE: MLX90427 Triaxis support (SPI) */
+@@ -667 +665,0 @@
+-    (_SUPPORT_TRIAXIS_MLX90427 != FALSE) ||                                     /* SPI Triaxis */ \
+@@ -744,4 +741,0 @@
+-#define C_THRSHLD_CONST                     1U                                  /*!< Stall detector threshold is constant */
+-#define C_THRSHLD_SPEED                     2U                                  /*!< Stall detector threshold is speed depended */
+-#define C_THRSHLD_SPEED_W_OFFSET            3U                                  /*!< Stall detector threshold is speed depended, with offset */
+-#define _SUPPORT_STALLDET_LA_MODE           /*C_THRSHLD_CONST*/ C_THRSHLD_SPEED  /*!< Stall detector threshold: CONST: Constant; SPEED: Speed depended (MMP240712-1) */
+@@ -764,2 +757,0 @@
+-#define _SUPPORT_RSHUNT                     C_RSHUNT_R010                       /*!< Choice of motor current shunt */
+-#elif (_SUPPORT_EVB == MLX81346EVB_200W)
+@@ -769,4 +760,0 @@
+-#elif (_SUPPORT_EVB == MLX81346EVB_600W)
+-#define _SUPPORT_RSHUNT                     C_RSHUNT_R005                       /*!< Choice of motor current shunt */
+-#elif (_SUPPORT_EVB == MLX81346EVB_ITFAN)
+-#define _SUPPORT_RSHUNT                     C_RSHUNT_R050 /*C_RSHUNT_R100*/     /*!< Choice of motor current shunt */
+@@ -839,3 +827,3 @@
+-#define _SUPPORT_CAN_IRQ_IO                 PIN_FUNC_IO_NONE                    /*!< CAN IRQ on IO[3:0] (DI) */
+-#define _SUPPORT_CAN_STDBY_IO               PIN_FUNC_IO_NONE                    /*!< CAN Controller STDBY on IO[3:0] (DO) */
+-#define _SUPPORT_CAN_RST_IO                 PIN_FUNC_IO_NONE                    /*!< CAN RST on IO[3:0] (DO) */
++#define _SUPPORT_CAN_IRQ_IO                 PIN_FUNC_IO_NONE                    /*!< CAN IRQ on IO[7:0] (DI) */
++#define _SUPPORT_CAN_STDBY_IO               PIN_FUNC_IO_NONE                    /*!< CAN Controller STDBY on IO[7:0] (DO) */
++#define _SUPPORT_CAN_RST_IO                 PIN_FUNC_IO_NONE                    /*!< CAN RST on IO[7:0] (DO) */
+@@ -938 +926 @@
+-    (_SUPPORT_TRIAXIS_MLX90363 != FALSE) || (_SUPPORT_TRIAXIS_MLX90395 != FALSE) || (_SUPPORT_TRIAXIS_MLX90427 != FALSE)  /* SPI Sensor */
++    (_SUPPORT_TRIAXIS_MLX90363 != FALSE) || (_SUPPORT_TRIAXIS_MLX90395 != FALSE)  /* SPI Sensor */
+@@ -967,5 +955,5 @@
+-#define _SUPPORT_SPI_MOSI_IO                PIN_FUNC_IO_3                       /*!< SPI MOSI on IO[3:0] - MLX90363-Pin6 (brown) */
+-#define _SUPPORT_SPI_MISO_IO                PIN_FUNC_IO_4                       /*!< SPI MISO on IO[3:0] - MLX90363-Pin2 (red) */
+-#define _SUPPORT_SPI_CLK                    PIN_FUNC_IO_2                       /*!< SPI SCLK on IO[3:0] - MLX90363-Pin4 (orange) */
+-#define _SUPPORT_SPI_SS                     PIN_FUNC_IO_1                       /*!< SPI  -SS on IO[3:0] - MLX90363-Pin5 (yellow) */
+-#if (_SUPPORT_TRIAXIS_MLX90363 != FALSE) || (_SUPPORT_TRIAXIS_MLX90395 != FALSE) || (_SUPPORT_TRIAXIS_MLX90427 != FALSE) || (CAN_COMM != FALSE)
++#define _SUPPORT_SPI_MOSI_IO                PIN_FUNC_IO_3                       /*!< SPI MOSI on IO[7:0] - MLX90363-Pin6 (brown) */
++#define _SUPPORT_SPI_MISO_IO                PIN_FUNC_IO_4                       /*!< SPI MISO on IO[7:0] - MLX90363-Pin2 (red) */
++#define _SUPPORT_SPI_CLK                    PIN_FUNC_IO_2                       /*!< SPI SCLK on IO[7:0] - MLX90363-Pin4 (orange) */
++#define _SUPPORT_SPI_SS                     PIN_FUNC_IO_1                       /*!< SPI  -SS on IO[7:0] - MLX90363-Pin5 (yellow) */
++#if (_SUPPORT_TRIAXIS_MLX90363 != FALSE) || (_SUPPORT_TRIAXIS_MLX90395 != FALSE) || (CAN_COMM != FALSE)
+@@ -973 +961 @@
+-#else  /* (_SUPPORT_TRIAXIS_MLX90363 != FALSE) || (_SUPPORT_TRIAXIS_MLX90395 != FALSE) || (_SUPPORT_TRIAXIS_MLX90427 != FALSE) */
++#else  /* (_SUPPORT_TRIAXIS_MLX90363 != FALSE) || (_SUPPORT_TRIAXIS_MLX90395 != FALSE) */
+@@ -975 +963 @@
+-#endif /* (_SUPPORT_TRIAXIS_MLX90363 != FALSE) || (_SUPPORT_TRIAXIS_MLX90395 != FALSE) || (_SUPPORT_TRIAXIS_MLX90427 != FALSE) */
++#endif /* (_SUPPORT_TRIAXIS_MLX90363 != FALSE) || (_SUPPORT_TRIAXIS_MLX90395 != FALSE) */
+@@ -994,2 +982,2 @@
+-#define _SUPPORT_UART_RX_IO                 PIN_FUNC_IO_4                       /*!< UART RX on IO[3:0] */
+-#define _SUPPORT_UART_TX_IO                 PIN_FUNC_IO_5                       /*!< UART TX on IO[3:0] */
++#define _SUPPORT_UART_RX_IO                 PIN_FUNC_IO_4                       /*!< UART RX on IO[7:0] */
++#define _SUPPORT_UART_TX_IO                 PIN_FUNC_IO_5                       /*!< UART TX on IO[7:0] */

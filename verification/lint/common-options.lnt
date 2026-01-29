@@ -1,0 +1,24 @@
+//
+// Common configuration options of PC-Lint
+//
+
+-hF1                // Output options: One line, file info always
++ffn                // use full path names
+
+//-"format=%(%f:%l:%C:%) %t %n: %m"   // same format as GCC error format to parse by Eclipse parser
+-"format=%f(%l): %t %n: %m (%t <a href=\qhttp://jenkins-buact.tess.elex.be:8080/userContent/LintMsgRef.html#%n\q>%n</a>)"
+
+//-frl                // for eclipse, the reference locations provided by
+                    // Lint, put into square brackets "[Reference: File: ... Line: ...]"
+                    // are not correctly handled,
+
+-width(0, 0)        // no limit for the line width in PC-Lint messages
++flm                // lock format options thus they can not be changed by other lnt files
+
++fdi                // start #include searching nearby (relative to current file) rather than in current directory
+
+-fff                // do not fold file names (otherwise complains on .C extension)
+-passes(2)          // deep 2 passes in search
+
+-restore_at_end     // don't let -e<nnnn> options bleed to other source files
+-summary()          // get a summary of all detected issues

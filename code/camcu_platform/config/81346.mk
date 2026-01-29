@@ -1,0 +1,80 @@
+# @file
+# @brief Translate REVISION to PROJECT_ID
+# @internal
+#
+# @copyright (C) 2020 Melexis N.V.
+#
+# Melexis N.V. is supplying this code for use with Melexis N.V. processor based microcontrollers only.
+#
+# THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY,
+# INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.  MELEXIS N.V. SHALL NOT IN ANY CIRCUMSTANCES,
+# BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+#
+# @endinternal
+#
+# @ingroup config
+#
+# @details This file assigns the dependence between chip's revision and the project id's
+#
+
+ifeq ($(ORDER_CODE), 81346-xLW-AMx-001)
+  PROJECT_ID = 0x0E01
+  PROJECT_PATH_EXT = A01
+  ROM_BASED_LOADER = PPM
+  CHIP_PACKAGE = QFN32
+endif
+
+ifeq ($(ORDER_CODE), 81346-xPF-AMx-101)
+  PROJECT_ID = 0x0E02
+  PROJECT_PATH_EXT = A01
+  ROM_BASED_LOADER = PPM
+  CHIP_PACKAGE = TQFP48
+endif
+
+ifeq ($(ORDER_CODE), 81346-xLW-AMx-002)
+  PROJECT_ID = 0x0E03
+  PROJECT_PATH_EXT = A01
+  ROM_BASED_LOADER = PPM
+  CHIP_PACKAGE = QFN32
+endif
+
+ifeq ($(ORDER_CODE), 81346-xPF-AMx-102)
+  PROJECT_ID = 0x0E04
+  PROJECT_PATH_EXT = A01
+  ROM_BASED_LOADER = PPM
+  CHIP_PACKAGE = TQFP48
+endif
+
+ifeq ($(ORDER_CODE), 81346-xLW-BMx-003)
+  PROJECT_ID = 0x0E05
+  PROJECT_PATH_EXT = B01
+  ROM_BASED_LOADER = PPM
+  ROM_BASED_LOADER += UDS_LOADER
+  CHIP_PACKAGE = QFN32
+endif
+
+ifeq ($(ORDER_CODE), 81346-xPF-BMx-003)
+  PROJECT_ID = 0x0E06
+  PROJECT_PATH_EXT = B01
+  ROM_BASED_LOADER = PPM
+  ROM_BASED_LOADER += UDS_LOADER
+  CHIP_PACKAGE = TQFP48
+endif
+
+ifndef PROJECT_ID
+  $(error 'Error: Unknown order code selected ($(ORDER_CODE)).')
+endif
+
+
+CHIP_REVISION = $(PROJECT_PATH_EXT)
+
+# expose the chip package type to the sources
+PLTF_DEFS += CHIP_PACKAGE=$(CHIP_PACKAGE)
+PLTF_DEFS += HAS_MLX81346_37_FIX=1
+
+# uds services are stored in flash start
+UDS_SERVICES_AT_START = 1
+
+# default uds is not enabled
+UDS_LOADER ?= 0

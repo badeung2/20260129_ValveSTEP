@@ -1,0 +1,33 @@
+//
+// CPU: Melexis MLX16
+//
+
+//
+// Basic type sizes
+//
+
+-ss2    // sizeof(short)
+-si2    // sizeof(int)
+-sl4    // sizeof(long)
+-sll8   // sizeof(long long), should be used with +fll
+
+-sf4    // sizeof(float)
+-sd4    // sizeof(double)
+-sld8   // sizeof(long double)
+-sp2    // sizeof(void*)
+
+//-sw1    // sizeof(wchar_t)
+
+
+//
+// Alignments
+//
+
+-as2    // short
+-ai2    // int
+-ap2    // void*
+-al2    // long
+-all2   // long long
+-af2    // float
+-ad2    // double
+-ald2   // long double

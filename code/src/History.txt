@@ -1,0 +1,430 @@
+History MLX81330AA
+
+Melexis "UniROM" code (Bi-polar micro-stepper mode).
+Features:
+1. LIN Simple (Percentage) communication
+2. LIN Melexis Diagnostics
+3. LIN UDS
+4. Bi-polar open-loop stepper mode, with build option:
+
+Initial working version
+V1.0.E001: 04-SEP-2018 On GitLib
+
+MMP180917-1: Check Motor-driver voltage prior to motor driver self-test
+MMP180924-1: Fix sleep-compensation time
+MMP181008-1: Add used registers for the C-compiler (AppProcPowerSave(), HALT)
+MMP181008-2: Last sample correction (ADC_StartSoftTrig())
+MMP181008-3: Add support for ISO17987
+MMP181008-4: Use Melexis GNU Compiler V3.0.28
+MMP181011-1: Fix p_CopyU16 (A is corrupted)
+MMP181109-1: Check Motor-active/LIN-AA before Flash-BIST.
+MMP181114-2: Change PID Max-behavior and clip at PWM-calculation
+             Change p_MulI16_I16byI16Shft4() into p_MulU16_U16byU16Shft4()
+V1.0.E002: 20181115 On GitLab: 81330AA_MLX_Test [dev_MMP]
+
+MMP181124-x: Clear l_u32MotorCurrentLPF when l_u16MotorCurrentLPF is changed
+             Change PID-Losses from 1/32th to 1/64th (6-bit)
+             Change Stall-A Threshold from 1/128th to 1/256th (8-bit)
+             Change to GCC V3.0.31
+             Add LIN_2x_HVAC support
+V1.0.E003: 20181125 ON GitLab: 81330AA_MLX_BiPolar [dev_MMP]
+
+MMP181128-1: Clear WBOOT reason after handling
+MMP181128-4: Update 'g_u16ActualHallLatchPos' on every Hall-Latch edge;
+             Set l_u16ShaftRatiox512 according gearbox-ratio & sense-magnet pole-pairs.
+MMP181128-6: Add PWM-to-DRV delay correction
+MMP190110-1: Bugfix JIRA-ticket DCC-1293.
+V1.0.E004: 20190110 ON GitLab: MLX81330AA_MLX_BiPolar [dev_MMP]
+
+MMP190116-1: Clear LoaderReset at LIN_Init() to avoid chip-reset after S2M (RSTAT).
+MMP190116-2: Clear g_u8LinInFrameBufState to avoid repeated chip-reset when LIN-buffer as not cleared (RSTAT).
+MMP190312-1: Support DC vs. BLDC/Stepper OV-level
+MMP190405-1: Increase LIN Slewrate by one-step to avoid LIN communication errors during VS rapid drop during transmissions
+MMP190412-1: Stall EEPROM structure layout change (Add Stall "S")
+MMP190523-1: Fix ADC_Stop by adding a NOP after ADC-stop bit set
+MMP190731-1: Disable all ADC triggers prior to clearing ABORT and ERR-flags; Rename: CTRL2 --> STATUS
+MMP190731-2: Split ADC_Calib() from ADC_Init()
+MMP190801-1: Invalidate NAD during LIN-AA
+MMP190904-1: Add EEPROM u12StructID check
+MMP190909-1: Support Drive Protection Modes (Tri-state or LS/HS)
+MMP190920-1: Application check.
+MMP190920-2: Check (repeatedly) VS minimum level at ADC-Init
+MMP190924-1: ErrorLog based on 16-bit Errorcodes; Use PendIrqCheck()
+V1.0.E005: 20190926 ON GitLab: MLX81330AA_MLX_BiPolar [dev_MMP]
+
+MMP191007-1: Fix JIRA DCC-1356 p_PIdpPWM()
+MMP191007-2: Update to Platform V0.13.0
+V1.0.E006: 20191028 ON GitLab: MLX81330AA_MLX_BiPolar [dev_MMP]
+
+MMP191030-3: MLX4 Second-level IRQ controller check
+MMP191205-1: Correct VDDD MIN and MAX value (ADC)
+MMP191207-1: MLX4 RAM Buffer LinFrame & PID
+MMP191211-1: CAMCU Platform V0.14.2 (Needed for MLX81330B2)
+MMP191216-1: MLX8133x Driver Slewrate 7 is not allowed (max = 6)
+MMP191224-1: Get address except in case of STACK_IT
+MMP191230-1: Actuator current based on peak-current (not sum current)
+MMP200117-1: Losses & BEMF split for PID_Start()
+MMP200220-1: System Vectors in user-mode
+MMP200123-1: LIN-AA 81332B TRIM/GAIN
+MMP200223-1: Holding mode current measurement
+MMP200227-1: DRVSUP must be enabled always, or at least during LIN-AA
+MMP200306-1: New Calib & Trim EE-Layout V1.3
+MMP200319-1: Switch to CPU-SPEED4 (in case 32MHz is selected), and supply above 4V
+MMP200324-1: VDDA @ 5V Support
+MMP200330-2: CAMCU Platform V0.16.0
+MMP200408-1: LIN-AA Fix (Same divider constants)
+MMP200505-1: ADC_MCurrOffCalib() for Mcurr offset at motor-start
+MMP200506-1: Add GET_STACK() to private mathlib
+MMP200507-1: Decrease LIN-AA l_u16LinFrameTimeOut atomically
+MMP200525-1: Add Mulan2/3, CAMCU 8133x & CAMCU 8134x to support-list 
+MMP200527-1: Double the LIN-AA delay for 9600Buad in LIN-AA step #3
+MMP200527-2: Update to Platform V0.17.2.1
+MMP200602-1: Enable driver supply prior to the CP-Clock
+MMP200615-1: Re-check VDS Monitors
+MMP200616-1: IC Selfheat adjustment CAMCU (1C/1.6V, and ADC_MCUR)
+V1.0.E007: 20200616 ON GitLab: MLX81330AA_MLX_BiPolar [dev_MMP]
+
+MMP200624-1: Change EEPROM Write Atomic protection, to prevent IC reset
+MMP200625-2: Update p_AwdAck
+MMP200626-1: ADC High Voltage & Motor Current Temperature compensation added
+MMP200626-2: Check EEPROM layout version (>= 3)
+MMP200628-1: Include Diagnostics Rinnen Robustness (double fault in 1 Tick)
+MMP200630-1: Support application in User-mode (+236 B)
+MMP200630-2: Update I/O-portsmap use io for first IO-ports (-54 B)
+MMP200702-1: Add check Motor-current * Motor-shunt < 100mV
+MMP200702-2: Actuator/communication-platform
+MMP200702-3: Update to Platform V0.18.0.2
+MMP200706-1: Ignore VDS/OC-error in case of VDDA-UV
+MMP200728-1: Charge-pump clock temperature compensation (_SUPPORT_CPFREQ_TEMPCOMP)
+MMP200729-1: Add Exit Degraded-mode delay (LH V5.2 - 9.6.3.4)
+MMP200731-x: Add MLX81340 (FOC) & change to drivelib, senselib and commlib
+MMP200803-x: Add MLX81344 (FOC)
+MMP200806-x: Add Start-to-run, __MLX81332B02__ support, ml_ResetDrv() only in system-mode
+MMP200807-x: MotorDriver_3PhaseFOC(); Holding current fix; Sensorless SCF; Sine-table 4-microsteps added
+MMP200812-x: Change sub-directory structure; Add 81346
+MMP200818-1: Check CSA; Correct CurrA
+V1.0.E008: 20200820 ON GitLab: MLX81330AA_MLX_BiPolar [dev_MMP]
+
+MMP200826-x: Add Tripple Hall-Latch support (3-phase BLDC) to senselib
+MMP200826-x: Add DMA Stress test
+MMP200826-x: Add SPI to commlib
+MMP200903-x: Add CAN support
+MMP200904-x: Re-arrange SPI
+MMP201012-1: Add Sine motor-drive to Zwickau test
+MMP201019-1: Make sure DRVSUP is enabled before ENABLE_CSA
+MMP201022-1: Add variable Charge-pump Frequency (_SUPPORT_CPFREQ) (60MHz .. 82MHz)
+V1.0.E009: 20201023 ON GitLab: MLX81330AA_MLX_BiPolar [dev_MMP]
+
+MMP201104-1: Update Motor-test to use PWM_MASTER1
+MMP201104-2: Improve PID_Controller, use of SumError Maximum (not fixed), and 32-bit output-support
+MMP201105-1: Voltage Control Single Coil FAN
+MMP201106-1: Add TI TCAN4550 CAN-FD support (via SPI)
+MMP201113-1: LIN-AA LIN Bus-timeout fix
+V1.0.E00A: 20201113 ON GitLab: MLX81330AA_MLX_BiPolar [dev_MMP]
+
+MMP201203-1: Fix IRQ mask restore due to Diagnostics
+MMP201204-1: Room Temperature fix (in case EE-Calib is invalid)
+MMP201217-1: Reserved-bit should be '1'
+MMP201217-2: Support HVAC 5.2 GAD in status
+MMP201222-2: Fix Threshold-Control 5th-zone (above T4), the compensation setting
+MMP210108-1: Fix Windmill-FOC, checking minimum BEMF voltage amplitude (>10 ADC-LSB's)
+MMP210108-2: Reduce SRP recirculation time (from 5xRL-time to RL-time) by changing DRV_CTRL from GND to TRI_STATE
+MMP210108-3: Reduce Self-Test recirculation time (1ms --> 100us) by changing DRV_CTRL from GND to TRI_STATE
+MMP210112-1: Read-by-Identifier only when NAD matches (can be BROADCAST)
+MMP210125-1: Update FOC (performance improvement)
+MMP210129-1: FOC l_u16mR_RT factor changed
+MMP210208-1: Add VDDA/VDDD Low-Pass Filter option
+MMP210212-1: Fix ADC_Init(), VS-recheck (reload SBASE)
+MMP210212-2: Fix False OV when VS is below 4V (Swap ADC_Init() and DiagnosticsInit())
+MMP210301-1: (Optional) Add ROM Bist Check.
+MMP210301-2: Add MLX81340B support
+V1.0.E00B: 210305 ON GitLab: MLX81330AA_MLX_BiPolar [dev_MMP]
+
+MMP210408-1: Improve Standand LIN and Enhanced LIN EEPROM Block check.
+MMP210411-1: Check MLX4 buffer not-free.
+MMP210411-2: Add Baudrate check (9600+/-10%, 10417+/-10% and 19200+/-10%).
+MMP210411-3: Check LIN MLX4 Command Overflow.
+MMP210411-4: Check both VS and VSMF are above VS_MIN for 20-times.
+MMP210506-1: Fix SRP (Disable ADC MASK) - Only first time works
+MMP210512-1: Modify ADC_StartSoftTrig() to set ADC_SBASE and ADC_CTRL if not started.
+MMP210512-1: Add SPI-Communication as option (HAL_Build.h)
+MMP210513-1: Update RCO-clock vs. temperature calculation (signed offset)
+MMP210527-1: Swap order IV (Close-loop start-up) and IB
+MMP210527-2: Add MLX81160 SSCM2 configuration
+MMP210608-1: PID Inline support (FOC Performance improvement: 0.4us)
+MMP210618-1: VDDAF UV MASK has to be disabled by Diagnostics-protection, not by MotorDriverConfig()
+MMP210622-1: Add Full-step BEMF-based stall (for slow speed actuators)
+MMP210624-1: PWM-Communication LIN via IO to ISR (w/o CTimer)
+MMP210701-1: Support Lock/Unlock PPM Bootloader (by means of writing an EEPROM Patch)
+MMP210719-1: CPU FP0ADR correction
+MMP210722-1: VDDA, VS/VSM supply check at POR by ADC_Init()
+MMP210729-1: Clear STOP FF after CPU HALT
+MMP210802-1: Add CDI support (MLX81344B)
+MMP210901-1: Enable OC comparator (MLX81340B, MLX81344B and MLX81346)
+MMP219001-2: Charge-pump enable for BOOST delay should be at least FILT_SEL time.
+MMP210907-1: Add support for Bipolar as 3-Phase (BIPOLAR_TRIPHASE_TWOPWM_INDEPENDENT_GND)
+MMP210910-1: Add support for SINE/SVM (TRIPLEPHASE_ALLPWM_MIRROR) */
+MMP210921-1: CDI Fix
+MMP210921-2: Switch FOC2CDI & CDI2FOC
+MMP210929-1: Avoid PID "overflow" on below calculation.
+MMP210930-1: Add CDI PID
+MMP211005-1: Add VDDA_UV IC Deep Sleep mode, to protect IC from overheating/damage.
+MMP211006-1: Fix MLX90381 Magnetic Axes configuration (replace fixed-constant by variable)
+MMP211006-2: Add (test-version) of Flash Production Data (begin, after vectors or end; 1 or 2 Flash-sectors).
+MMP211022-1: Add MLX81346B support
+V1.0.E00C: ON GitLab: MLX81330AA_MLX_BiPolar [dev_MMP] (211027)
+
+MMP211102-1: Support MLX81346 48V application
+MMP211103-1: Fix MotorDriverFOC CTRL before LT change
+MMP211104-1: Add I2C EEPROM support
+MMP211104-2: Reorganise I2C protocol and master/slave support
+MMP211105-1: Add Patch for Fast-ROM restart incase of Wake-up (LIN or IO) (MLX81160 only) 
+MMP211105-2: Add Wake-up by IO support.
+MMP211108-1: Split LIN_Diagnostics.c (file too large for eclipse in 'STD', 'MLX' and 'UDS')
+MMP211208-1: Change PID factor from 1024 (<<10) to 4096 (<<12); Needed for FOC Id/Iq PID's
+MMP211222-1: Change FOC Mode/observer selection
+MMP220104-1: Add 3-phase Bi-polar FOC support
+MMP220107-1: Add UART based on IO
+V1.0.E00D: Updated on GitLab MLX81330AA_MLX_BiPolar [dev_MMP] (220107)
+
+MMP220112-1: Add MLX90829 Pressure Sensor (SENT)
+MMP220113-1: Fix Single Coil Fan/Pump PID Coefficient "multiplier" 256 -> 1024.
+MMP220114-1: Add MLX8134x BEMF-based motor operation
+MMP220123-1: Add RAM Transparent BIST Check
+MMP220123-2: Fix Flash BIST 64kB (MLX81344/46)
+MMP220128-1: VSMF Offset correction (MLX8134x - JIRA: MLX81346-187)
+MMP220128-2: Seatheating correction (MLX8134x - Pre-Driver IC)
+MMP220203-1: EE_CheckCRC(): Reduce code size by ~390 bytes.
+MMP220204-1: PID_Control.c: Varibale l_u16ActCurrRunMin "#if"-fix
+MMP220307-1: Add Bandgap Digital Voltage check
+V1.0.E00E: Updated on GitLab MLX81330AA_MLX_BiPolar [dev_MMP] (220307)
+
+MMP220315-1: Keep Diagnostics IT's enabled during CPU HALT.
+MMP220316-1: Don't disable DIAG IT.
+MMP220322-1: Unscrustify.cfg
+MMP220411-1: Fix System ROM BIST check
+MMP220412-1: Add Bi-Polar FOC
+MMP220415-1: Improve 20kHz PWM-communication via LIN 
+MMP220516-1: Add MLX90421 (PWM) Triaxis Sensor support
+MMP220519-1: Add Anti-cogging (_SUPPORT_ANTICOGGING) support
+MMP220523-1: Support ADC Motor Current with ADC Reference 1.5V (MLX8133x)
+MMP220525-1: Add Debugging via UART (Streaming of l_au8MotorCurrRaw[])
+Commenst: 
+* UART Baudrate: 1MBaud (CPU @ 32MHz)
+* UART-package 16 Bytes; 160us + 7us (overhead)
+* UART package data: 14 Bytes; 14By/167us = 83832 By/s
+* Micro-stepping (3000 RPM, 5PP, 8uStep/Full-Step): 12kHz (83.3us), 4By logging --> 48000 By/s
+* FOC (PWM-period: 50us, 4By logging) --> 80000 By/s (marginal)
+* CPU-load: 7us/167us = 4.2%
+MMP220602-1: Rename of files:
+Build               --> AppBuild.h
+HAL_Defines.h       --> AppDefines.h
+HAL_Switches.h      --> AppSwitches.h
+app_version.c       --> AppVersion.c
+app_version.h       --> AppVersion.h
+[New]                   ActDefines.h
+MotorParams.h       --> ActParams.h
+drivelib\AppBuild.h --> drivelib\LibVersion.h
+Version: 1.0        --> 2.0
+Copyright:          --> 2022
+V1.0.E00F: Updated on GitLab MLX81330AA_MLX_BiPolar [dev_MMP] (220602)
+
+MMP220607-1: VSMF Offset measurement (only MLX8134x)
+MMP220610-1: Add MLX90377 SPC Triaxis support
+MMP220613-1: Leave OV_VS at 1us debounce time (IC protection).
+MMP220713-1: Fix for "ADC Interface stops and does not wait for the end of the bus transaction (AMALTHEA-1428)" when ADC Table is located in Flash or ROM
+MMP220720-1: Stall Detector "Load Angle" updated with LPF, Threshold and Width (_SUPPORT_STALLDET_LA).
+MMP220722-1: Caterian FOC Id/Iq implementation (FOC_ID_IQ_CARTESIAN)
+MMP220725-1: Stall Detector "Flux" added with Threshold and Width (_SUPPORT_STALLDET_FLUX).
+V1.0.E010: Updated on GitLab MLX81330AA_MLX_BiPolar [dev_MMP] (220726)
+
+MMP220729-1: In case holding current required, MotorDriverSelfTest() should not disable MotorDriverConfig() unless there is a permanent error.
+MMP220801-1: Add Windmilling support for SCF.
+MMP220805-1: Add handling of MLX4 "ml_erLinModuleReset" by restoring LIN connection
+MMP220815-1: Add 3-PWM (0-33-67) support to FOC SVM-L
+MMP220818-1: 81160 & 8134x: UV/OV on VSM (not VS)
+MMP220818-2: ADC Initialisation checks both VDDA and VDDAF (MLX81160 & MLX8133x); In case of UV, IC enters deep-sleep (waiting for supply level to raise above UV levels)
+MMP220822-1: Add UART Quad-wheel car communication (_SUPPORT_UART_QUAD_CAR)
+MMP220825-1: Add Actuator Motion Detection (based on BEMF) for Quad-wheel car (_SUPPORT_MOTION_DET)
+MMP220826-1: Add Bi-directional rotation for CONTINUOUS rotating actuators (_SUPPORT_MOTOR_DIRECTION)
+MMP220907-1: Add Sensor-based Motion detection (C_MOTION_DET_SENSOR)
+MMP220910-1: Add Sensor-based stall-detection
+V1.0.E011: Updated on GitLab MLX81330AA_MLX_BiPolar [dev_MMP] (220913)
+
+MMP220919-1: Update ioports_MLX81160.h with PH_IN[5:0] support
+MMP220920-1: Add Inductive Position Sensor MLX90513
+MMP220921-1: Add Enhanced Slow Channel Informatiode decoding for SENT
+MMP220923-1: Disable ADC IRQ at ADC_Stop(); Caused issue by Windmill support.
+MMP221013-1: Slaves not detected by Master due to Master sening init-frame while Slaves start receiving; Out of sync detected, but init-frame not resended; Solution: Increase Master delay.
+MMP221013-2: Increase idle time after car movement before motion detection (High interia of Wheels/car)
+MMP221013-3: After slave detected stall, next movement is immediately stopped due to repeated stall transmission. Clear Slave stall at Motor-Stop request.
+MMP221014-1: Low rate clicking sound caused by a-synchronic PWM switching (_SUPPORT_PWM_SYNC = FALSE)
+MMP221014-2: "Return-to-Base" support added.
+MMP221024-1: Soft-Start rotate wheel slowly (less shock)
+MMP221027-1: Charge-pump slew-rate driver setting (MLX81332 & MLX81334)
+MMP221031-1: Code-size reduction by: clean-up, use DP-section (~164Bytes)
+MMP221101-1: Code-size reduction by: DIV replacement by ASR/LSR and EE_POLE_PAIRS by g_u16MotorPolePairs (~128Bytes).
+MMP221103-1: Up to 12 (byte) channels UART-Scope implementation. Every 4 Motor-PWM's data transmission.
+MMP221129-1: Clear (initialise) LIN Baudrate detection variables.
+MMP221130-1: Moved; EEPROM check before noinit section initialisation.
+MMP221130-2: Swapped FL_ECC and EE_ECC in PEND0 and MASK0 for MLX8133x.
+MMP221201-1: Add B_ADC_BLOCK_ADC_OVF ADC Overflow flag clearing.
+MMP221202-1: Create mem_map_MLX81xxx.h (obsolete EE_MelexisPage.h)
+MMP221202-2: Fix for HVAC V5.2 Group Address support.
+MMP221205-1: Move Atan.S, Pack_Unpack.S and private_mathlib.c/h from drivelib to camculib
+V1.0.E012: Updated on GitLab MLX81330AA_MLX_BiPolar [dev_MMP] (221206)
+
+MMP221207-1: Moved ADC_Init before EEPROM Check (AppInit())
+MMP221207-2: Add MLX4 Private Auto and Last Baudrate-checks
+MMP221216-1: ADC SBASE Structure support
+MMP230222-1: GetBaudrate fix 81334
+MMP230224-1: Solenoid support
+MMP230303-1: Adapt rampdown-limit by actual-speed, not max-speed (TEST)
+MMP230303-2: Adaptable LA-LPF coefficient
+MMP230306-1: NAD Range check supported added.
+MMP230306-2: Re-trim VDDA at 5V (MLX81330 only)
+MMP230307-1: Cosine/S-curve acceleration (C_ACCELERATION_COSINE_CURVE)
+MMP230307-2: UART Actuator communication interface
+MMP230309-1: Fix adaptive rampdown-limit by actual-speed
+MMP230309-2: UART-Scope channel-address 0x0000 fix (returns NULL-data).
+MMP230310-1: Add UART Blue-tooth support
+MMP230313-1: Add MLX90395 SPI-Triaxis support (untested, no IC2C support)
+MMP230317-1: Fix UART on I/O-base atomic-protection.
+MMP230405-1: Add MLX90422, MLX90425 and MLX90426 Triaxis support
+MMP230406-1: Split _SUPPORT_MOTOR_POSITION into "NONE", "ROTOR" and (outer) "SHAFT".
+MMP230406-2: Add for all Triaxis variants two functions: GetTriaxisAngle() and GetShaftAngle().
+MMP230406-3: Add two global variables for "SHAFT" motor position support: g_u16ActualShaftAngle and g_u16TargetShaftAngle.
+MMP230411-1: Add I/O-Selection for command/position (_SUPPORT_IO_CMD_SELECT_LVIO)
+V1.0.E013: Updated on GitLab MLX81330AA_MLX_BiPolar [dev_MMP] (230413)
+
+MMP230426-1: Add Single Hall-Latch "position" support (e.g. Head Light Levelling/Swiffeling "mid" position detection)
+MMP230428-1: Add l_i16MotorVoltageCoilA/l_u16MotorVoltageCoilA variable, used by UART-Scope. 
+MMP230502-1: NTC Temperature Sensor support added.
+MMP230510-1: Adapt 12-bit ADC EOC Triggers for MLX81340/44/46
+MMP230512-1: Code size reduction by use of p_MemCpyU16() (private_mathlib.h)
+MMP230512-2: Bugfix incase _SUPPORT_PWM_MODE = TRIPLEPHASE_ALLPWM_MIRROR, as IO_PWM_SLAVE2_CMP count has been changed from default.
+MMP230516-1: Add BEMF Star-point reference voltage measurement for zero-cross detection (_SUPPORT_BEMF_STARPOINT)
+MMP230516-2: Add Lead-angle compensation option (_SUPPORT_BEMF_LEADANGLE_COMPENSATE)
+MMP230522-1: Update I2C Communication (I2C_Generic & I2C_NonAutomotive), use of IRQ's, HandleI2cInMsg(), HandleI2cOutMsg()
+MMP230523-1: Update UART Communication (UART_Actutaor), ISR_UDFR_Actuator(), ISR_UDTF_Actuator()
+MMP230531-1: AppSleep() makes use of mlu_ApplicationStop(), to stop application, DMA's and IRQ's
+MMP230531-2: Rewind fix
+MMP230601-1: Bi-polar full-step motor PWM duty-cycle fix.
+MMP230602-1: Add @attention remark on all ioports files regarding system I/O-ports.
+MMP230607-1: SCF with HL and Tacho-out: Tacho-out based on HL iso micro-stepping
+MMP230612-1: In case voltage not in range, remove PWM duty-cycle history, to allow "same" DC */
+MMP230614-1: Add Stall "H" detector; LIN status report stall; PWM tacho-out stops as well as the motor until new PWM-in Duty-cycle [SCF wHL].
+MMP230614-2: Auto clear of Stall after delay-time (5 seconds) (_SUPPORT_STALL_AUTO_CLEAR)
+MMP230614-3: New PWM-in accepted as stall-clear (_SUPPORT_PWMCOMM_STALL) 
+MMP230615-1: Combine (PID) l_u16ActAcrrRunMax and l_u16PidRunningThreshold to a new l_u16ActAcrrRunMax_LSB; l_u16PidRunningCurrent --> l_u16ActAcrrRunMax_mA
+MMP230616-1: Fix CAN Valve speed mode conversion to target-speed [RPM]
+MMP230616-2: Add Willmilling based on Hall-Latch commutation.
+MMP230705-1: Support various triple-hall-latch switching schemes.
+MMP230705-2: Stop measurement in case PMW-period is too small (below C_PWMIN_PERIOD_SINGLE), to avoid end-less communication interrupts
+MMP230707-1: Check HL Commutation timer period minumum (avoid IC reset due to CPU load)
+MMP230707-2: Resume from CPU HALT on HL event
+MMP230710-1: Add Motor Rotational Direction support (CW|CCW|CMD)
+MMP230715-1: Fix Tacho-output in FOC-mode
+MMP230715-2: Add support for 3-phase Full-step (w/o BEMF)
+MMP230719-1: Add Current limitation to PID Speed controller
+MMP230720-1: Fix missed Hall-Latch event in commutation period.
+MMP230721-1: Split Start-delay from Start-request to avoid Motor-request clearance
+MMP230726-1: Log wake-up event (INFO)
+MMP230802-1: Improved BRI stall detection for bi-polar steppers (centered around the Motor-current @ 50% of PWM-period)
+MMP230802-2: Remove Voltage-correction in case of ID/IQ FOC mode (-1.40us)
+MMP230802-3: Replace SQRT by Sine/Cosine for Sinusoidal control for Ipk/MotorCurrentPeak (-1.2us).
+             FOC Id/Iq calculation order changed (Valpha/Vbeta) (-0.10us)
+MMP230803-1: Redefine l_u16MotorCurrentRaw to g_u16MotorCurrentPeak, and i16TanI/i16CurrentAngle to g_i16MotorCurrentAngle
+MMP230803-2: Replace SQRT by Sine/Cosine for Sinusoidal control for Vpk/MotorVoltagePeak (-1.0us).
+MMP230804-1: Code size (178By) and performance (0.06us) optimized MotorDriver_3Phase() for FOC with SVM_LH.
+MMP230809-1: Add Windmilling rotational direction detection.
+MMP230810-1: Fix 2nd UART used only (for BT)
+MMP230810-2: Add BT Scope Rate (BT-message/ms) support 
+MMP230811-1: Add Braking support
+MMP230818-1: Add 64V OV-level diagnostics for MLX81346. 
+MMP230824-1: IV_Stall-detector for Low-speed Feed-Forward drive.
+MMP230830-1: Fix high precision Atan2 (_SUPPORT_FAST_ATAN2_LOOKUP = FALSE)
+MMP230831-1: Triaxis MLX90377 PWM-output support
+MMP230901-1: Triaxis MLX90377 Stall Detector "P" support
+V1.0.E014: Updated on GitLab MLX81330AA_MLX_BiPolar [dev_MMP] (230901)
+
+MMP230912-1: PID Reference voltage dependent on _APP_SUPPLY_RANGE
+MMP230912-2: Add Close2Open support for extreme low speed
+MMP230912-3: Reset PID control counter during alignment
+MMP230918-1: Add Auto-speed switch from Current-control to FOC-control (_SUPPORT_AUTO_SPEED_FOC)
+MMP230919-1: ADC_Start() add parameter to optionally enable/disable the ADC-IRQ
+MMP230919-X: Complete conditional '#if' statements with "!= FALSE"
+MMP231009-1: Split PID_Control (add PID_Control_Period(), PID_Control_Error())
+MMP231017-1: Half-step support added, with BEMF sense.
+MMP231018-1: Add LIN protocol "AirVent" support.
+MMP231018-2: ADC_GetRawMotorDriverCurrent() optimized for speed (_SUPPORT_VOLTAGE_SHAPE == VOLTAGE_SHAPE_DSVM_ALT)
+MMP231112-1: FOC Voltage-angle fix.
+MMP231117-1: Add Application and IC reset function.
+MMP231121-1: Support FAST_STOP by using recirculation (and VS cap charge)
+MMP231124-1: Add Humidity Sensor TI HDC302x support (_SUPPORT_HUMIDITY_HDC302x)
+MMP231208-1: OSD Fix (I & R values) for MLX81340/44)
+
+MMP240207-2: Switch from OL to CL with IB+IPK, start PID-Ipk
+MMP240207-3: Reduce PWM DC only when Actual-current above Max-current * Open2Close-ratio. 
+MMP240214-1: Add LIN-AA Supply Voltage Compensation.
+MMP240304-1: Adapt ADC Minimum pulse and trigger-point for MotorDriverSelfTestPin() and MotorDriverSelfTestCoilShort()
+MMP240305-1: Set LIN-AA initial value for 'l_u8AutoAddressingFlags' to 0x00U (IC-reset due to p_AwdAck() at MainLoop and LinAutoAddressingTimer()).
+MMP240306-1: Add vector.S file define check.
+MMP240308-1: Add UART Terminal.
+MMP240313-1: Add DMA with variable length.
+MMP240322..26: Add Hardware Abstraction Layer (HAL) for ADC, coPRO, PWM and STimer
+MMP240327-1: Add MLX81339 & MLX81350 to application platform
+V1.0.E015: Updated on GitLab MLX81330AA_MLX_BiPolar [dev_MMP] (240328)
+
+MMP240328-1: Fix I2C via COMM (I2C-SCK)
+MMP240328-2: Fix support for bi-polar actuators (MotorDriverSelfTest)
+MMP240402-1: Fix p_ClipMinMaxI16() and p_ClipMinMaxU16()
+MMP240408-1: Check LIN buffer free, prior to ml_DataReady()
+MMP240412-1: Improve ADC Offset measurement by skipping 1st measurement (S&H)
+MMP240412-2: Add (subtract) ADC error to absolute values [ADC_LSB]
+MMP240423-1: Add I2C Mlx Actuator support
+MMP240430-1: Add UART Mlx Actuator support
+MMP240503-1: Protect UART Rx/Tx-timeout update from being interrupted.
+MMP240514-1: Add UV/OV to Mlx-Actuator interface
+MMP240515-1: Coil Resistance and driver/FET RDS-on in [10mR]
+MMP240517-1: Add UART Hardware Abstraction Layer (HAL)
+MMP240517-2: Add SPI Hardware Abstraction Layer (HAL)
+MMP240524-1: Lead-Angle PID (sPIDpLA2AS) coefficients 4x smaller, error 4x bigger (actual error)
+MMP240524-2: Correct Speed PID (sPIDpSE2VA) Coefficients (4x smaller)
+MMP240527-1: Adapt LIN-AA to support MLX81350 changed configuration.
+V1.0.E016: Updated on GitLab MLX81330AA_MLX_BiPolar [dev_MMP] (240531)
+
+MMP240607-1: Resume CPU from HALT, in case of PPM-ERR event (SENT)
+MMP240607-2: Open-loop Stall IV: Add LPF (IIR-1)
+MMP240607-3: Speed dependent Stall LA threshold.
+MMP240618-1: Add MLX90427 SPI Triaxis (240624: Tested).
+MMP240709-1: Update Holding mode for positioning devices (From Run to Hold, reduce PWN by 50%).
+MMP240709-2: PID Holding & Threshold-Control periods in milli-seconds (instead of Ticks).
+MMP240711-1: Fix Bi-polar Single coil ISR_CTIMER0_3()
+MMP240712-1: Stall LA Threshold selection: Constant or Speed depended.
+V1.0.E017: Updated on GitLab MLX81330AA_MLX_BiPolar [dev_MMP] (240716)
+
+MMP240725-1: Fix Debug sub-sampling counter update (not application related)
+MMP240725-2: Correct the Stall-LA threshold for Open-loop (start-up).
+MMP240725-3: Replace in SwitchOpen2Close() the Stall-Detector-LA MotorStallInitLA() to MotorStallSwitchOpen2CloseLA()
+MMP240725-4: Use LPF for actual Load-angle also in "Open-Loop"
+MMP240726-1: Check minimum PID-losses is twice minimum PWM Duty-cycle (don't add)
+MMP240726-2: BEMF-constant support [10mV/rps] and [mV/rps]
+MMP240729-1: Start-up mode changed from uint8_t to packed-enum (E_MSM_*) (E_MOTOR_STARTUP_MODE_t l_e8MotorStartupMode)
+MMP240729-2: Alignment-steps changed from uint8_t to packed-enum (E_ALIGN_STEP_*) (E_ALIGNMENT_STEPS_t l_e8AlignmentStep)
+MMP240730-1: Holding torque NV-value fix pre-driver/driver IC's
+
+
+ADD in Linker-script below section before ".flash_data": 
+    .flash_align :
+    {
+        SHORT(0xCAFE);
+        . = ALIGN (8);   /* explicit alignment as following section requires such */
+    } > flash
+
+SENSORS:
+For MLX90378 use MLX90367/372 (SENT)
+For MLX90422 use MLX90367/372 (SENT)
+For MLX90425 use MLX90421 (PWM)
+For MLX90426 use MLX90367/372 (SENT)
+

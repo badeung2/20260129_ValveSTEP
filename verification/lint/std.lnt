@@ -1,0 +1,17 @@
+//
+// Master include file
+//
+// Notes:
+//  1. Comment out au-misra2.lnt if MISRA rules checking is not needed
+//
+
+common-options.lnt  // Common configuration options
+co-gcc.lnt          // Compiler specific configuration
+//au-misra2.lnt       // MISRA-2004 (C2)
+//au-misra3.lnt       // MISRA-2012 (C3)
+
+project-options.lnt // Project specific configuration options
+temp.lnt            // Temporary configuration, e.g. errors suppresion etc
+
+
+// EOF
