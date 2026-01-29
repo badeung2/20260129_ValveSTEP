@@ -4,8 +4,8 @@ import subprocess
 import glob
 
 # 설정
-TARGET_DIR = r"d:\Firmware\42_20260127_ValveBLDC\code\src\drivelib"
-SCRIPT_PATH = r"d:\Firmware\42_20260127_ValveBLDC\code\src\resolve_preprocessor.py"
+TARGET_DIR = r"D:\Firmware\43_20260129_ValveSTEP\code\src"
+SCRIPT_PATH = r"D:\Firmware\43_20260129_ValveSTEP\code\src\CleanCode\resolve_preprocessor.py"
 
 # 대상 파일 확장자
 EXTENSIONS = ['*.c', '*.h']

@@ -3,9 +3,6 @@
 #define FALSE 0U
 #define TRUE 1U
 #define UNKNOWN -2U
-#if !defined (NULL)
-#define NULL 0U
-#endif
 #define ADC_SOS_TRIGGER_HW 1
 #define ADC_SOS_TRIGGER_SW 2
 #define C_APP_SUPPLY_RANGE_12V 1
@@ -59,30 +56,12 @@
 #define PIN_FUNC_IO_1 2
 #define PIN_FUNC_IO_2 3
 #define PIN_FUNC_IO_3 4
-#if !defined (__MLX81330__) && !defined (__MLX81350__)
 #define PIN_FUNC_IO_4 5
 #define PIN_FUNC_IO_5 6
 #define PIN_FUNC_IO_6 7
 #define PIN_FUNC_IO_7 8
-#if !defined (__MLX81332__) && !defined (__MLX81334__) && !defined (__MLX81339__)
-#define PIN_FUNC_IO_8 9
-#define PIN_FUNC_IO_9 10
-#define PIN_FUNC_IO_10 11
-#define PIN_FUNC_IO_11 12
-#endif
-#endif
-#if defined (__MLX81160__)
-#define PIN_FUNC_LIN 13
-#define PIN_FUNC_R 14
-#define PIN_FUNC_S 15
-#elif defined (__MLX81339__)
-#define PIN_FUNC_COMM 15
-#else
 #define PIN_FUNC_LIN 15
-#endif
-#if defined (__MLX81160__) || defined (__MLX81330__) || defined (__MLX81332__) || defined (__MLX81334__) || defined (__MLX81339__) || defined (__MLX81350__)
 #define PIN_FUNC_T 16
-#endif
 #define PIN_FUNC_U 17
 #define PIN_FUNC_V 18
 #define PIN_FUNC_W 19
@@ -163,23 +142,12 @@
 #define TRIPLEPHASE_FULL_STEP 13
 #define TRIPLEPHASE_HALF_STEP_BEMF 14
 #define BIPOLAR_HALF_STEP_BEMF 15
-#if defined (__MLX81330__) || defined (__MLX81332__) || defined (__MLX81334__) || defined (__MLX81339__) || defined (__MLX81350__)
 #define SINGLE_COIL_DUAL 1
 #define SINGLE_COIL_PARALLEL 2
-#elif defined (__MLX81160__)
-#define TRIPLE_COIL_DUAL 1
-#define TRIPLE_COIL_PARALLEL 3
-#endif
-#if defined (__MLX81330__) || defined (__MLX81332__) || defined (__MLX81334__) || defined (__MLX81339__) || defined (__MLX81350__)
 #define BIPOLAR_MODE_UV_WT 0
 #define BIPOLAR_MODE_UT_VW 1
 #define BIPOLAR_MODE_UW_VT 2
 #define BIPOLAR_MODE_UV_TW 4
-#elif defined (__MLX81160__)
-#define BIPOLAR_MODE_RS_TU 0
-#define BIPOLAR_MODE_RU_ST 1
-#define BIPOLAR_MODE_RT_SU 2
-#endif
 #define FOC_MODE_NONE 0x00
 #define FOC_MODE_IV 0x01
 #define FOC_MODE_IB 0x02
@@ -212,11 +180,6 @@
 #define MF_STEPPER 0x30U
 #define MF_RELUCTANCE 0x40U
 #define MF_FOC 0x50U
-#if defined (__MLX81160__)
-#define ADC_CUR_SENSE_CH1 1
-#define ADC_CUR_SENSE_CH2 2
-#define ADC_CUR_SENSE_CHX 3
-#endif
 #define C_MOTOR_POS_NONE 0U
 #define C_MOTOR_POS_ROTOR 1U
 #define C_MOTOR_POS_SHAFT 2U

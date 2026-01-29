@@ -360,15 +360,6 @@ def main():
     global undefined_macros
     undefined_macros = set()
     
-    defs = {}
-    defs['defined'] = 0 
-    defs['TRUE'] = '1'
-    defs['FALSE'] = '0'
-    
-    for h in CONFIG_HEADERS:
-        parse_definitions(h, defs)
-    print(f"[정보] 외부 정의 {len(defs)}개 로드됨.")
-
     target_files = []
     if len(sys.argv) > 1:
         # 커맨드 라인 인자가 있으면 그것들을 대상 파일로 사용
@@ -378,10 +369,30 @@ def main():
         target_files = [TARGET_FILE]
 
     for fname in target_files:
-        if os.path.exists(fname):
-            process_file_single_pass(fname, defs)
-        else:
+        if not os.path.exists(fname):
             print(f"[오류] 대상 파일 {fname}이 없습니다.")
+            continue
+
+        print(f"\\n[처리] 파일: {fname}")
+        
+        # 각 파일마다 정의를 새로 로드 (자기 자신 제외 로직 적용)
+        defs = {}
+        defs['defined'] = 0 
+        defs['TRUE'] = '1'
+        defs['FALSE'] = '0'
+        
+        target_basename = os.path.basename(fname)
+        
+        for h in CONFIG_HEADERS:
+            # 자기 자신은 설정 로드에서 제외 (Self-Pollution 방지)
+            if os.path.basename(h) == target_basename:
+                print(f"[정보] 자기 참조 방지: {h} 설정 로드 생략")
+                continue
+                
+            parse_definitions(h, defs)
+            
+        print(f"[정보] 외부 정의 {len(defs)}개 로드됨.")
+        process_file_single_pass(fname, defs)
 
     report_path = 'undefined_macros_report.txt'
     with open(report_path, 'w', encoding='utf-8') as f:

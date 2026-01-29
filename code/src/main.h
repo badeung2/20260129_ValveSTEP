@@ -6,7 +6,4 @@
 extern void main_PeriodicTimerEvent(uint16_t u16Period);
 extern void main_noinit_section_init(void);
 extern int main(void);
-#if (_SUPPORT_NV_EMERGENCY_STORE != FALSE)
-extern void HandleSleepMotorRequest(void);
-#endif
 #endif

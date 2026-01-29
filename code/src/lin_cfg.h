@@ -4,7 +4,4 @@
 #define MLX_SUPPLIER_ID 0x5AFE
 #define MLX_FUNCTION_ID 0xBEAF
 #define MLX_VARIANT_ID 0x01
-#if (MLX_INITIAL_NAD < 0x01) || (MLX_INITIAL_NAD > 0x7E)
-# error "Initial NAD (MLX_INITIAL_NAD) shall be in range [0x01..0x7E]"
-#endif
 #endif
